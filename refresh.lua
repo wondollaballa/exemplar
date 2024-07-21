@@ -23,11 +23,16 @@ function load_user_files()
             windower.create_dir(dir)
         end
         path = dir .. '/' .. file_name
-        local f = io.open(path, 'w')
-        f:write('return {}')
-        f:close()
+        local file = io.open(path, "w")
+
+        if file then
+            windower.add_to_chat(207, 'Exemplar: Created new file for ' .. player_name .. ' at ' .. path)
+            file:close()
+        else
+            print("Could not create file at path: " .. file_path)
+        end
         -- inform the user that we successfully created the file
-        windower.add_to_chat(207, 'Exemplar: Created new file for ' .. player_name .. ' at ' .. path)
+        
     end
 end
 
