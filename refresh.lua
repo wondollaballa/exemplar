@@ -15,6 +15,13 @@ function load_user_files()
     local path
     path = pathsearch({file_name}, player_name)
     if not path then
+        -- check to see if the data folder exists, if not create it
+        local data_dir = windower.addon_path .. 'data'
+        if not windower.dir_exists(data_dir) then
+            windower.add_to_chat(207, 'Exemplar: Creating new directory for data at ' .. data_dir)
+            windower.create_dir(data_dir)
+        end
+
         local dir = windower.addon_path .. 'data/' .. player_name
 
         -- create the directory and file if it doesn't exist
@@ -29,10 +36,13 @@ function load_user_files()
             windower.add_to_chat(207, 'Exemplar: Created new file for ' .. player_name .. ' at ' .. path)
             file:close()
         else
-            print("Could not create file at path: " .. file_path)
+            print("Could not create file at path: " .. path)
         end
         -- inform the user that we successfully created the file
         
+    else 
+        -- load the file
+        windower.add_to_chat(207, 'Exemplar: Loading ' .. path)
     end
 end
 
